@@ -197,6 +197,7 @@ class HandlebarsVisitor[T](
     }
     val block = new ChildContext(value, Some(context))
     (program: Program) => value match {
+      case map:Map[_,_] => createVisitor(new ChildContext(map, Some(block))).visit(program)
       case list:Iterable[_] => list.map(i => createVisitor(new ChildContext(i, Some(block))).visit(program)).mkString
       case array:Array[_] => array.map(i => createVisitor(new ChildContext(i, Some(block))).visit(program)).mkString
       case javaList:java.util.Collection[_] => javaList.map(i => createVisitor(new ChildContext(i, Some(block))).visit(program)).mkString

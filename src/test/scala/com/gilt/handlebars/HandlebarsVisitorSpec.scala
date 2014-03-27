@@ -408,6 +408,12 @@ class HandlebarsVisitorSpec extends Specification {
       visitor.visit(program) must beEqualTo("Yehuda Katz")
     }
 
+    "visit a program and render an #if block if the context is a Map" in {
+      val program = Handlebars.parse("{{#if x}}{{x}}{{/if}} {{#if y}}{{y}}{{/if}}")
+      val visitor = HandlebarsVisitor(Map("x" -> "Hello", "y" -> "world"))
+      visitor.visit(program) must beEqualTo("Hello world")
+    }
+
     "visit a program and render a block when the argument of #if is true" in {
       val program = Handlebars.parse("{{#if doIt}}Hi!{{/if}}")
       val visitor = HandlebarsVisitor(new { val doIt = true })
