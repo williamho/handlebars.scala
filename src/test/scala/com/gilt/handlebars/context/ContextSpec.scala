@@ -117,6 +117,11 @@ class ContextSpec extends FunSpec with Matchers {
       ctx.lookup(getIdentifier("{{content.description.undefined.undefined}}")).isVoid should equal(true)
     }
 
+    it("looks up a path in a Map.WithDefault: 'city'") {
+      val ctx = makeContext(Map().withDefaultValue("Brussels"))
+      ctx.lookup(getIdentifier("{{city}}")).modelValue should equal("Brussels")
+    }
+
     it("looks up a path in a Map: 'city'") {
       val ctx = makeContext(Map("city" -> "Brussels"))
       ctx.lookup(getIdentifier("{{city}}")).modelValue should equal("Brussels")

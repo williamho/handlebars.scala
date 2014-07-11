@@ -59,6 +59,10 @@ class DynamicBindingSpec extends FunSpec with Matchers {
       DynamicBinding(Map("name" -> "Bob")).traverse("name") should equal (DynamicBinding("Bob"))
     }
 
+    it("traverses string members in maps with default value") {
+      DynamicBinding(Map().withDefaultValue("Bob")).traverse("name") should equal (DynamicBinding("Bob"))
+    }
+
     it("returns a VoidBinding when traversing to the unknown") {
       DynamicBinding(Map("name" -> "Bob")).traverse("age") should equal (VoidBinding[Any])
     }

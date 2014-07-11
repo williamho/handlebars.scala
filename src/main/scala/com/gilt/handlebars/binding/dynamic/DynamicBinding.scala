@@ -43,6 +43,8 @@ class DynamicBinding(val data: Any) extends FullBinding[Any] with Loggable {
   def traverse(key: String, args: List[Binding[Any]] = List.empty): Binding[Any] =
     data match {
       case Some(m) => (new DynamicBinding(m)).traverse(key, args)
+      case map:Map.WithDefault[String, _] =>
+        new DynamicBinding(map(key))
       case map:Map[_, _] =>
         map.asInstanceOf[Map[String, Any]].get(key) match {
           case Some(value) => new DynamicBinding(value)
