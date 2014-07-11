@@ -120,7 +120,6 @@ class HelperOptionsBuilder(context: Context[Any],
           val visitorContext = getContext(model)
           new DefaultVisitor(visitorContext, partials, helpers, dataMap ++ extraData).visit(node)
       }.getOrElse {
-        warn("No inverse node found for program: %s".format(program))
         ""
       }
     }

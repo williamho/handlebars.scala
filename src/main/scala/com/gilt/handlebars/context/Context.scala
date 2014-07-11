@@ -56,6 +56,7 @@ object Context {
    */
   def truthValue(a: Any): Boolean = a match {
     case /* UndefinedValue |*/ None | false | Nil | null | "" => false
+    case arr: Array[_] => arr.nonEmpty
     case _ => true
   }
 
@@ -140,6 +141,7 @@ trait Context[+T] extends ContextFactory with Loggable {
           createChild(value, this)
       }.orElse {
         model match {
+          case map:Map.WithDefault[String, _] => Some(map(methodName)).map( v => createChild(v, this) )
           case map:Map[String, _] => map.get(methodName).map( v => createChild(v, this))
           case _ => None
         }

@@ -111,6 +111,12 @@ class ContextSpec extends FunSpec with ShouldMatchers with ClassCacheableContext
       ctx.lookup(getIdentifier("{{city}}")).model should equal("Brussels")
     }
 
+    it("looks up a path in a Map.WithDefault: 'city'") {
+      val ctx = createRoot(Map().withDefaultValue("Brussels"))
+      ctx.lookup(getIdentifier("{{city}}")).model should equal("Brussels")
+    }
+
+
     it("looks up a path in a Map: '../city'") {
       val ctx = createChild(person, createRoot(Map("city" -> "Brussels")))
       ctx.lookup(getIdentifier("{{../city}}")).model should equal("Brussels")
